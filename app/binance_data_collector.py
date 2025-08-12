@@ -2,6 +2,7 @@ import asyncio
 import json
 import websockets
 from data_access import PostgresClient, RedisClient
+from live_predictor import LivePredictor
 
 SYMBOL = "btcusdt"
 INTERVAL = "1m"
@@ -10,6 +11,7 @@ BINANCE_WS_URL = "wss://stream.binance.com:9443/ws/{}@kline_{}"
 async def main():
     pg_client = PostgresClient()
     redis_client = RedisClient()
+    predictor = LivePredictor("C:/Users/ashwi/OneDrive/Documents/1_UNI/Projects/Real-Time Market Data Trading Simulator/Trading-Simulator/app/rf_model.joblib", SYMBOL)
 
     ws_url = BINANCE_WS_URL.format(SYMBOL, INTERVAL)
     try:
@@ -38,6 +40,18 @@ async def main():
 
                 print(f"Stored bar for {SYMBOL} @ {bar['open_time']} Close: {bar['close']}")
 
+                 # Make live prediction
+                try:
+                    pred_close = predictor.predict_next_close()
+                    print(f"Predicted next close price: {pred_close:.2f}")
+
+                    # Save prediction to Redis for UI/API to access
+                    key = f"prediction:{SYMBOL}:next_close"
+                    await redis_client.set(key, pred_close)
+
+                except Exception as e:
+                    print(f"Prediction error: {e}")
+
     except asyncio.CancelledError:
         print("Task was cancelled, cleaning up...")
 
@@ -47,6 +61,7 @@ async def main():
     finally:
         await redis_client.close()
         pg_client.close()
+        predictor.close()
         print("Shutdown complete.")
 
 if __name__ == "__main__":

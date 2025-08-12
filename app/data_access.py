@@ -63,6 +63,15 @@ class RedisClient:
         if data:
             return json.loads(data)
         return None
+    
+    async def set(self, key, value):
+        await self.client.set(key, json.dumps(value))
+
+    async def get(self, key):
+        data = await self.client.get(key)
+        if data:
+            return json.loads(data)
+        return None
 
     async def close(self):
         await self.client.aclose()
