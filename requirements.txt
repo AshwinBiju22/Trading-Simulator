@@ -1,0 +1,9 @@
+fastapi
+pandas
+numpy
+plotly
+uvicorn
+psycopg2-binary
+redis
+alpaca-trade-api
+streamlit
