@@ -1,7 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from data_access import PostgresClient, RedisClient
-import asyncio
+from typing import List
 
 app = FastAPI()
 
@@ -13,14 +15,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 pg = PostgresClient()
 redis = RedisClient()
 
+
+#@app.get("/")
+#def serve_dashboard():
+#    return FileResponse("C:/Users/ashwi/OneDrive/Documents/1_UNI/Projects/Real-Time Market Data Trading Simulator/Trading-Simulator/app/templates/dashboard.html")
+
+
+# Serve landing page
+@app.get("/")
+def serve_landing():
+    return FileResponse("C:/Users/ashwi/OneDrive/Documents/1_UNI/Projects/Real-Time Market Data Trading Simulator/Trading-Simulator/app/templates/index.html")
+
+# Serve live data dashboard
+@app.get("/dashboard")
+def serve_dashboard():
+    return FileResponse("C:/Users/ashwi/OneDrive/Documents/1_UNI/Projects/Real-Time Market Data Trading Simulator/Trading-Simulator/app/templates/dashboard.html")
+
+# Serve predictions page
+@app.get("/predictions")
+def serve_predictions():
+    return FileResponse("C:/Users/ashwi/OneDrive/Documents/1_UNI/Projects/Real-Time Market Data Trading Simulator/Trading-Simulator/app/templates/predictions.html")
+
+# API: fetch recent bars
 @app.get("/bars")
 def get_bars(symbol: str = "btcusdt", limit: int = 100):
-    bars = pg.fetch_latest_bars(symbol, limit)
-    return bars
+    return pg.fetch_latest_bars(symbol, limit)
 
+# API: fetch latest prediction
 @app.get("/prediction")
 async def get_prediction(symbol: str = "btcusdt"):
     key = f"prediction:{symbol}:next_close"
@@ -28,3 +54,5 @@ async def get_prediction(symbol: str = "btcusdt"):
     if prediction is not None:
         return {"next_close": float(prediction)}
     return {"next_close": None}
+
+

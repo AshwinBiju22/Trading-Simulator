@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trading Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial; background: #121212; color: white; text-align: center; }
+        canvas { background: #1e1e1e; border-radius: 8px; }
+        #prediction { font-size: 1.5rem; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Live BTCUSDT Dashboard</h1>
+    <canvas id="priceChart" width="800" height="400"></canvas>
+    <div id="prediction">Prediction: Loading...</div>
+
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'Close Price', data: [], borderColor: '#4bc0c0', fill: false },
+                    { label: 'Prediction', data: [], borderColor: '#ff6384', fill: false, borderDash: [5,5] }
+                ]
+            },
+            options: { responsive: true, scales: { x: { display: true }, y: { display: true } } }
+        });
+
+        async function fetchBars() {
+            const res = await fetch('/bars?limit=50');
+            const bars = await res.json();
+            chart.data.labels = bars.map(b => new Date(b.open_time).toLocaleTimeString());
+            chart.data.datasets[0].data = bars.map(b => b.close);
+            chart.update();
+        }
+
+        async function fetchPrediction() {
+            const res = await fetch('/prediction');
+            const pred = await res.json();
+            document.getElementById('prediction').innerText = `Prediction: ${pred.prediction.toFixed(2)}`;
+            
+            if (chart.data.datasets[0].data.length > 0) {
+                const lastClose = chart.data.datasets[0].data[chart.data.datasets[0].data.length - 1];
+                const labels = [...chart.data.labels, "Next"];
+                const preds = [...chart.data.datasets[0].data, pred.prediction];
+                
+                chart.data.labels = labels;
+                chart.data.datasets[1].data = preds;
+                chart.update();
+            }
+        }
+
+        async function refreshData() {
+            await fetchBars();
+            await fetchPrediction();
+        }
+
+        setInterval(refreshData, 2000);
+        refreshData();
+    </script>
+</body>
+</html>
