@@ -3,13 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketSim - Predictions</title>
+    <title>Predictions - QuantFlow</title>
     <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="/static/js/predictions.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Chart container styling */
+        .chart-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+        .chart-canvas {
+            width: 100%;
+            height: 400px;
+        }
+        .prediction-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4aa;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
+    <!-- Header / Navigation -->
     <header>
-        <div class="logo">MarketSim</div>
+        <div class="logo">QuantFlow</div>
         <nav>
             <a href="/">Home</a>
             <a href="/dashboard">Live Data</a>
@@ -17,15 +40,19 @@
         </nav>
     </header>
 
-    <main class="page-container">
-        <h1>Market Predictions</h1>
-        <div id="predictions-container" class="data-table">
-            <!-- Predictions data will be inserted by predictions.js -->
+    <!-- Main Content -->
+    <main class="container">
+        <section class="page-header">
+            <h1>AI-Driven Predictions</h1>
+        </section>
+
+        <div class="chart-wrapper">
+            <div id="prediction" class="prediction-value">Loading...</div>
+            <canvas id="predictionChart" class="chart-canvas"></canvas>
         </div>
     </main>
 
-    <footer>
-        <p>© 2025 MarketSim. All rights reserved.</p>
-    </footer>
+    <!-- Scripts -->
+    <script src="/static/js/predictions.js"></script>
 </body>
 </html>

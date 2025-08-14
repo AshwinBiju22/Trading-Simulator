@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketSim - Live Data</title>
+    <title>Live Dashboard - QuantFlow</title>
     <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="/static/js/dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Specific styles for chart section */
+        .chart-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+        .chart-canvas {
+            width: 100%;
+            height: 400px; /* Normal size */
+        }
+    </style>
 </head>
 <body>
+    <!-- Header / Navigation -->
     <header>
-        <div class="logo">MarketSim</div>
+        <div class="logo">QuantFlow</div>
         <nav>
             <a href="/">Home</a>
             <a href="/dashboard" class="active">Live Data</a>
@@ -17,15 +34,18 @@
         </nav>
     </header>
 
-    <main class="page-container">
-        <h1>Live Cryptocurrency Data</h1>
-        <div id="live-data-container" class="data-table">
-            <!-- Live data will be inserted by dashboard.js -->
-        </div>
+    <!-- Main Content -->
+    <main class="container">
+        <section class="page-header">
+            <h1>Live BTC/USDT Dashboard</h1>
+        </section>
+
+        <section class="chart-wrapper">
+            <canvas id="priceChart" class="chart-canvas"></canvas>
+        </section>
     </main>
 
-    <footer>
-        <p>© 2025 MarketSim. All rights reserved.</p>
-    </footer>
+    <!-- Scripts -->
+    <script src="/static/js/dashboard.js"></script>
 </body>
 </html>

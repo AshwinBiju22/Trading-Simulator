@@ -55,4 +55,23 @@ async def get_prediction(symbol: str = "btcusdt"):
         return {"next_close": float(prediction)}
     return {"next_close": None}
 
+@app.get("/predictions-data")
+async def get_predictions_data(symbol: str = "btcusdt", limit: int = 100):
+    # Get recent bars
+    bars = pg.fetch_latest_bars(symbol, limit)
+    timestamps = [bar["timestamp"] for bar in bars]
+    prices = [bar["close"] for bar in bars]
+
+    # Get historical predictions
+    preds = []
+    for ts in timestamps:
+        key = f"prediction:{symbol}:{ts}"
+        pred = await redis.get(key)
+        preds.append(float(pred) if pred is not None else None)
+
+    return {
+        "timestamps": timestamps,
+        "prices": prices,
+        "predictions": preds
+    }
 
