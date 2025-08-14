@@ -1,12 +1,18 @@
-# Trading-Simulator
-
 # QuantFlow – Real-Time Trading Simulator
-
+---
 ## Overview  
 QuantFlow is a **full-stack real-time trading simulator** designed for quantitative analysis and market research.  
 It integrates **live cryptocurrency market data** from Binance, **ML-driven forecasting**, and **interactive analytics** into a professional web interface.  
 
 Developed as a personal quantitative research platform, it combines **low-latency backend pipelines** with **modern frontend visualizations** to deliver an institutional-grade trading environment.  
+
+---
+
+## Video Demonstration
+
+Demo : https://drive.google.com/file/d/1PTIabSDr8Tl54NqXwSD3Z43qlzNFioip/view?usp=sharing
+
+Fun Promo Video : https://drive.google.com/file/d/1I7sgab0-bYzxRG-lEcvISB-Q01in2dsy/view?usp=sharing
 
 ---
 
