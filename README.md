@@ -10,9 +10,7 @@ Developed as a personal quantitative research platform, it combines **low-latenc
 
 ## Video Demonstration
 
-Demo : https://drive.google.com/file/d/1PTIabSDr8Tl54NqXwSD3Z43qlzNFioip/view?usp=sharing
-
-Fun Promo Video : https://drive.google.com/file/d/1I7sgab0-bYzxRG-lEcvISB-Q01in2dsy/view?usp=sharing
+Demo : In Progress
 
 ---
 
