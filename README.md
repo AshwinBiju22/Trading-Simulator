@@ -2,32 +2,62 @@
 
 # QuantFlow – Real-Time Trading Simulator
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.95+-009688)](https://fastapi.tiangolo.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13%2B-336791)](https://www.postgresql.org/)
-[![Redis](https://img.shields.io/badge/Redis-6%2B-DC382D)](https://redis.io/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+## Overview  
+QuantFlow is a **full-stack real-time trading simulator** designed for quantitative analysis and market research.  
+It integrates **live cryptocurrency market data** from Binance, **ML-driven forecasting**, and **interactive analytics** into a professional web interface.  
 
-> **A professional-grade real-time cryptocurrency trading simulator with live Binance market data, AI-powered price forecasting, and interactive analytics — designed for quantitative research and trading strategy development.**
-
-![Banner](static/images/banner.png) <!-- Replace with your banner image -->
+Developed as a personal quantitative research platform, it combines **low-latency backend pipelines** with **modern frontend visualizations** to deliver an institutional-grade trading environment.  
 
 ---
 
 ## Features  
 
-- **Live Market Data** – Streams BTCUSDT prices in real time from Binance WebSocket API  
-- **AI Predictions** – Forecasts next price movement using a trained Random Forest model  
-- **Interactive Charts** – Real-time candlestick and line charts via Chart.js  
-- **Low-Latency Architecture** – Optimized with PostgreSQL, Redis, and WebSockets  
-- **Automated Model Retraining** – Keeps predictions fresh with feature engineering workflows  
+### Real-Time Market Data Feed  
+- Streams live BTCUSDT price data via Binance WebSocket API.  
+- PostgreSQL for historical data storage and retrieval.  
+- Redis for ultra-fast in-memory caching of latest ticks and predictions.  
+
+---
+
+### AI-Powered Price Forecasting  
+- **Model:** Random Forest Regressor trained on engineered market features.  
+- Predicts the **next price close** in real time.  
+- Automated retraining workflow keeps predictions updated with latest market conditions.  
+
+**Feature Engineering Highlights:**  
+- Rolling averages, price momentum, volatility indicators.  
+- Normalization and outlier handling.  
+
+---
+
+### Interactive Web Dashboard  
+- Built with **TailwindCSS** for a sleek UI.  
+- **Chart.js** for live candlestick and line charts.  
+- Three main pages:  
+  - **Home:** Professional landing page with platform overview.  
+  - **Live Data:** Real-time price chart with second-by-second updates.  
+  - **Predictions:** Side-by-side view of actual vs. predicted prices.  
+
+---
+
+## System Architecture  
+
+```
+Binance WebSocket → Data Collector → PostgreSQL & Redis
+                                   ↓
+                           Feature Engineering
+                                   ↓
+                          Random Forest Model
+                                   ↓
+                          WebSocket API → Frontend
+```
 
 ---
 
 ## Tech Stack  
 
-**Backend:** Python, FastAPI, WebSockets, PostgreSQL, Redis, scikit-learn, pandas, NumPy  
-**Frontend:** HTML5, TailwindCSS, Chart.js, Vanilla JS  
-**Data Source:** Binance API (WebSocket & REST)  
+- **Backend:** Python, FastAPI, WebSockets, PostgreSQL, Redis, Scikit-learn, Pandas, NumPy  
+- **Frontend:** HTML5, TailwindCSS, Chart.js, JavaScript  
+- **Data Source:** Binance API (WebSocket + REST)  
+- **Infrastructure:** Local/PostgreSQL DB, Redis Cache, environment-managed secrets  
 
----
